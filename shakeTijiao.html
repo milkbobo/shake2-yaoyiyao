@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+    <title>领取奖品</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        html,body{
+            height: 100%;
+            background: #FA3B4D;
+        }
+        .bg{
+/*            background: url('http://shop.weiyd.cn/data/upload/image/shake/draw/images/bg2.jpg');*/
+            background-size: contain;
+            background-repeat: no-repeat;
+            height: 100%;
+            margin-top: -10px;
+            background-position: top;
+            background-repeat: no-repeat;
+            width: 100%;
+        }
+        .info{
+            width: 80%;
+            margin: 0 auto;
+            position: relative;
+            top: 70%;
+        }
+        .info input{
+            margin:0 auto;
+            display: block;
+            background: #6F1D29;
+            height: 30px;
+            width: 75%;
+            margin-top: 10px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 800;
+            color: aliceblue;
+        }
+        .info input.submit{
+            background: url('./draw/images/button.png');
+            background-size: contain;
+        }
+        .info .sub{
+            margin: 0 auto;
+            height: 30px;
+            width: 75%;
+            border: 1px solid;
+            margin-top: 10px;
+            border-radius: 5px;
+            color: #B34007;
+            font-weight: bolder;
+            line-height: 30px;
+            text-align: center;
+            font-size: 20px;
+            background: url('./draw/images/button.png');
+            background-size: 110%;
+            background-position: top;
+            background-repeat: no-repeat;
+        }
+        .tupian{
+            position: absolute;
+        }
+        .tupian img{
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+   <div class="tupian"><img src="http://shop.weiyd.cn/data/upload/image/shake/draw/images/bg2.jpg" alt=""></div>
+    <div class="bg">
+        <div class="info">
+            <input type="text" name='username' placeholder="姓名">
+            <input type="text" name='phone' placeholder="请输入手机号码">
+            <div class="sub">立即领取</div>
+        </div>
+    </div>
+</body>
+<script>
+    $('.sub').click(function() {
+        window.username = $('input[name=username]')[0].value;
+        window.phone = $('input[name=phone]')[0].value;
+
+        $.post('/luckydraw/modUserInfo', { 
+            luckyDrawId:'10015',
+            name:window.username,
+            phone:window.phone,
+            clientId:'10071'
+        }, function(data) {
+           var Data = JSON.parse(data);
+            
+           if(Data.data == 1){
+               console.log(Data.data);
+                location.href = 'shake2.html' ;
+           }else{
+               alert('修改失败')
+           }
+        });
+    });
+    </script>
+</html>

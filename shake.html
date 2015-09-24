@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>摇一摇</title>
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,target-densitydpi=medium-dpi">
+    <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="./iscroll.js"></script>
+    
+    <style>
+        ul{list-style:none outside none;margin: 0;-webkit-padding-start: 0px;}
+        li { list-style:none;margin: 0 } 
+        body {
+            margin: 0;
+            background: #d04b38;
+        }
+        img{
+            display: block;
+        }
+        .head {
+            background: #ea5e3d;
+            width: 100%;
+            height: 120px;
+        }
+        .head .logo img{
+            width: 10%;
+            margin-left: 10%;
+        }
+        .head .yaoyiyao{
+            width: 30%;
+            margin-left: 10%;
+        }
+        .head .yaoyiyao img{
+            width: 100%;
+        }
+        .head .title{
+            position: absolute;
+            left:15%;
+            top: 15%;
+            
+        }
+        .head .title img{
+            width:81%;
+        }
+
+        .jie img{
+            width: 100%;
+
+        }
+        
+        .zhongjian{
+            width: 100%;
+        }
+        
+        .zhongjian .row{
+            position:absolute;
+            left: 14%;
+            width: 80%;
+
+        }
+        
+        .zhongjian .shang{
+            position: relative;
+            top: 0px;
+        }
+        .zhongjian .xia{
+            margin-left: 2px;
+            position: relative;
+/*            top: 22px;*/
+
+
+        }
+
+        .shangAction{
+            -webkit-animation:shangActive 1s ease-out;
+            animation:shangActive 1s ease-out;
+        }
+        .xiaAction{
+            -webkit-animation:xiaActive 1s ease-out;
+            animation:xiaActive 1s ease-out;
+        }
+         
+        .zhongjian img{
+            width: 100%;
+        }
+        
+        @-webkit-keyframes shangActive{
+            0%{top: 0}
+            50%{top: -20px;}
+            100%{top: 0}
+        }
+        
+        @-webkit-keyframes xiaActive{
+            0%{top: 0}
+            50%{top: 20px;}
+            100%{top: 0}
+        }
+        
+         @keyframes shangActive{
+            0%{top: 0}
+            50%{top: -20px;}
+            100%{top: 0}
+        }
+        
+        @keyframes xiaActive{
+            0%{top: 0}
+            50%{top: 20px;}
+            100%{top: 0}
+        }       
+        .footer{
+            position: fixed;
+            bottom: 0;
+        }
+        .footer img{
+            width: 100%;
+        }
+        
+        .text{
+            position: absolute;
+            bottom: 92px;
+            width: 100%;
+            text-align: center;
+            font-family: 黑体;
+            font-size: 20px;
+            color: aliceblue;
+            font-weight: 900;
+            
+        }
+        .footer .ckhd{
+/*            background: #000;*/
+            position: absolute;
+            width: 200px;
+            height: 100px;
+            top: 0px;
+        }
+
+        .footer .hjmd{
+/*            background: #000;*/
+            position: absolute;
+            width: 200px;
+            height: 100px;
+            left: 223px;
+            top:0px;
+        }
+
+        /*活动情况start*/
+        .hdqk{
+            position: fixed;
+            z-index: 100;
+            top: 20%;
+            display: none;
+        }
+        .hdqk img{
+            width: 100%;
+        }
+        .hdqk .cha{
+            width: 50px;
+            height: 50px;
+/*            background:#000;*/
+            position: fixed;
+            z-index: 111;
+            top: 20%;
+            right: 5%;
+        }
+                /*活动情况end*/
+        
+        
+        /*中奖*/
+        /*半透明*/
+        .shade{
+            background: black;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            opacity: 0.5;
+            z-index: 10;
+            display: none;
+        }
+        .box{
+            background: url('./1.png');
+            background-size: 100% 200%;
+            background-repeat: no-repeat;
+            width: 80%;
+            position: fixed;
+            top: 15%;
+            height: 350px;
+            left: 10%;
+            opacity: 1;
+            z-index: 999;
+            display: none;
+        }
+        .box img{
+            width: 80%;
+            margin-left: 10%;
+        }
+        .box img.close{
+            width: 25px;
+            height: 25px;
+            position: absolute;
+            right: 5%;
+            top: 1%;
+        }
+        .box span{
+            position: absolute;
+            right: 8%;
+            color: white;
+            background: url('./close.png');
+            display: block;
+        }
+        .box p{
+            text-align: center;
+            color: white;
+            font-weight: bolder;
+        }
+        .box .sub{
+            background: #FFEB6C;
+            color: #B64F0B;
+            width: 160px;
+            height: 30px;
+            margin: 0 auto;
+            line-height: 30px;
+            text-align: center;
+            border-radius: 10px;
+        }
+        /*中奖end*/
+        
+        /*名单*/
+        .zzmd{
+            display: none;
+            position: fixed;
+            left: 5%;
+            top: 70px;
+            width: 90%;
+            height: 400px;
+            background: rgba(0, 0, 0, 0.71);
+            z-index: 100;
+        }
+        .zzmd .text{
+            position: fixed;
+            top: 120px;
+            left: -100px;
+        }
+        .zzmd .tou{
+            display: -webkit-box;
+            display: box;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        .zzmd .tou .toubu{
+            -webkit-box-flex: 1;
+            box-flex: 1;
+            color: aliceblue;
+            font-size: 20px;
+            text-align: center;
+            margin-top: 90px;
+            border-top: 1px solid #fff;
+            padding-top: 15px;
+        }
+        .zzmd .neirong .tx img{
+            width: 50px;
+            border-radius: 50%;
+        }
+        
+        .zzmd .tou .xijie{
+            -webkit-box-flex: 1;
+            box-flex: 1;
+            color: aliceblue;
+            font-size: 20px;
+            text-align: center;
+            margin-top: 10px;
+
+            padding-top: 10px;
+            padding-bottom: 3px;
+        }
+        .zzmd .neirong{
+            border-bottom: 1px solid #fff;
+        }
+        .zzmd .tou .tx{
+            padding-left: 27px;
+            position: relative;
+            top: -10px;
+        }
+        .zzmd .bigContent{
+            height: 260px;
+            overflow: hidden;
+        }
+        .zzmd .chacha{
+            width: 80px;
+            height: 80px;
+            position: absolute;
+            right: 0px;
+            top: 40px;
+            
+        }
+        /*名单end*/
+    </style>
+</head>
+
+<body>
+    <div class="head">
+        <div class="logo"><img src="./logo.png" alt=""></div>
+        <div class="yaoyiyao"><img src="./yaoyiyao0.gif" alt=""></div>
+        <div class="title"><img src="text.png" alt=""></div>
+    </div>
+    <div class="jie"><img src="./head.png" alt=""></div>
+    
+    <div class="zhongjian">
+<div class="row">
+
+           <div class="shang shangAction"><img src="./shang.png" alt=""></div>
+           <div class="xia xiaAction"><img src="./xia.png" alt=""></div>
+
+       </div>
+   </div>
+    <div class="text">已摇<span> 1 </span>次</div>
+    <div class="footer">
+        <img src="./footer3.png" alt="">
+        <a href=""><div class="ckhd"></div></a>
+        <a href=""><div class="hjmd"></div></a>
+    </div>
+    
+    
+<!-- 活动情况start-->
+    <div class="hdqk"><img src="./ckhd.png" alt=""><div class="cha"></div></div>
+<!-- 活动情况end-->
+
+<!--中奖-->
+    <div class="shade">
+    </div>
+    <div class="box">
+        <img src="./close.png" alt="" class='close'>
+        <img src="./2.png" alt="">
+        <p>恭喜你获得韩国一日游</p>
+        <p>祝您生活愉快</p>
+        <div class="sub">
+            领取该奖品
+        </div>
+    </div>
+<!--中奖end-->
+    
+<!--名单-->
+    <div class="zzmd">
+        <div class="text">中奖名单</div>
+        <div class="chacha"><img src="./close.png" alt=""></div>
+        <div class="tou">
+            <div class="toubu">头像</div>
+            <div class="toubu">昵称</div>
+            <div class="toubu">奖品</div>
+        </div>
+        
+       <div class="bigContent" id="wrapper">
+             
+            <ul>
+                        <li>
+                            <div class="tou neirong">
+                                <div class="tx xijie"><img src="http://wx.qlogo.cn/mmopen/XHdmAkZw9sfsSAConqYwRyT6ia1lXZMYCV87mOibaichGibCthZJCh4pVL10BicptcU8hVr1J0wMUpx9hhP02LgjD0GEsALqoic6eK/0" alt=""></div>
+                                <div class="nc xijie">Edward</div>
+                                <div class="jp xijie">iphone6s</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="tou neirong">
+                                <div class="tx xijie"><img src="http://wx.qlogo.cn/mmopen/XHdmAkZw9sfsSAConqYwRyT6ia1lXZMYCV87mOibaichGibCthZJCh4pVL10BicptcU8hVr1J0wMUpx9hhP02LgjD0GEsALqoic6eK/0" alt=""></div>
+                                <div class="nc xijie">Edward</div>
+                                <div class="jp xijie">iphone6s</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="tou neirong">
+                                <div class="tx xijie"><img src="http://wx.qlogo.cn/mmopen/XHdmAkZw9sfsSAConqYwRyT6ia1lXZMYCV87mOibaichGibCthZJCh4pVL10BicptcU8hVr1J0wMUpx9hhP02LgjD0GEsALqoic6eK/0" alt=""></div>
+                                <div class="nc xijie">Edward</div>
+                                <div class="jp xijie">iphone6s</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="tou neirong">
+                                <div class="tx xijie"><img src="http://wx.qlogo.cn/mmopen/XHdmAkZw9sfsSAConqYwRyT6ia1lXZMYCV87mOibaichGibCthZJCh4pVL10BicptcU8hVr1J0wMUpx9hhP02LgjD0GEsALqoic6eK/0" alt=""></div>
+                                <div class="nc xijie">Edward</div>
+                                <div class="jp xijie">iphone6s</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="tou neirong">
+                                <div class="tx xijie"><img src="http://wx.qlogo.cn/mmopen/XHdmAkZw9sfsSAConqYwRyT6ia1lXZMYCV87mOibaichGibCthZJCh4pVL10BicptcU8hVr1J0wMUpx9hhP02LgjD0GEsALqoic6eK/0" alt=""></div>
+                                <div class="nc xijie">Edward</div>
+                                <div class="jp xijie">iphone6s</div>
+                            </div>
+                        </li>
+                        
+                    </ul>
+                    
+        </div>
+        
+        
+    </div>
+    <script>
+    var wrapper = document.getElementById('wrapper');
+    var myScroll = new IScroll(wrapper);
+        
+
+
+    if (window.DeviceMotionEvent) {　　　　 // 移动浏览器支持运动传感事件　　　
+      window.addEventListener('devicemotion', deviceMotionHandler, false);　　
+    } 
+//    else {
+//      alert('本设备不支持摇一摇（devicemotion）事件');
+//    }
+        
+function  deviceMotionHandler(eventData) {
+
+  　　 // 获取含重力的加速度
+    var x = eventData.accelerationIncludingGravity.x;
+    var y = eventData.accelerationIncludingGravity.y;
+    var z = eventData.accelerationIncludingGravity.z;
+    　　　　　　　　　　　　 // TODO:在此处可以实现摇一摇之后所要进行的数据逻辑操作
+
+    //修复iphone的bug
+    if (window.test == true) {
+
+
+      window.last_x = x;
+      window.last_y = y;
+      window.last_z = z;
+      window.test = false;
+
+    }
+
+    if ((x != window.last_x && x > 18 ) || (y != window.last_y && y > 18 )  || (z != window.last_z && z > 18 ) ) {
+      
+      window.last_x = x;
+      window.last_y = y;
+      window.last_z = z;
+
+      window.removeEventListener('devicemotion', deviceMotionHandler, false);
+      yaoYiYao();
+
+    }
+
+
+  };
+       
+function yaoYiYao(){
+
+//    this.refs.music1.getDOMNode().play();
+
+    //摇一摇图片分裂效果
+
+    $('.zhongjian .row .shang')
+    
+    
+    setTimeout(function() {
+      $('.yaoYiYao .image .shang').css('top', shang);
+      $('.yaoYiYao .image .xia').css('top', xia);
+
+    }, 500);
+
+    setTimeout(function() {
+
+      this.setState({
+          yaoYiYaoTextDisplay: false,
+        });
+
+      this.setState({
+        loadingDisplay: true,
+      });
+
+      $.post('/luckydraw/shakeDraw', {
+        luckyDrawId: this.state.luckyDrawId,
+      }, function(data) {
+
+        this.refs.music2.getDOMNode().play();
+
+        if (data.code != 0) {
+          this.setState({
+            errorNum:data.code
+          });
+        } else {
+          var luckyDraw=this.state.luckyDraw;
+          for (var i = 0; i != luckyDraw.commodity.length; ++i)
+            if (luckyDraw.commodity[i].luckyDrawCommodityId == data.data) {
+              this.setState({rotateFinishTip : luckyDraw.commodity[i].title}) ;
+              break;
+            }
+        }
+
+        this.setState({
+          yaoYiYaoDisplay: false,
+          loadingDisplay: false,
+        });
+
+        // if (typeof errorTitle == 'string') {
+        //   this.setState({yaoYiYaoPrizeText:errorTitle});
+        //   // $('.yaoYiYaoPrizeText').text(errorTitle);
+        // } else {
+        //   this.setState({yaoYiYaoPrizeText:'恭喜你，你获得的是：' + this.state.rotateFinishTip});
+        //   // $('.yaoYiYaoPrizeText').text('恭喜你，你获得的是：' + rotateFinishTip);
+        // }
+
+        this.setState({
+          WinListDisplay:true, //显示中奖名单
+        });
+
+      }.bind(this));
+    }.bind(this), 1000);
+
+};
+
+    </script>
+</body>
+
+</html>
